@@ -51,7 +51,7 @@
 				Call objStream.WriteText(JSONNumberPair("passCount", objModule.PassCount) & ",")
 				Call objStream.WriteText(JSONNumberPair("failCount", (objModule.FailCount)) & ",")
 				Call objStream.WriteText(JSONBooleanPair("passed", objModule.Passed) & ",")
-				Call objStream.WriteText(JSONNumberPair("duration", objModule.Duration) & ",")
+				Call objStream.WriteText(JSONStringPair("duration", objModule.Duration) & ",")
 				Call objStream.WriteText(JSONString("tests") & ":[")
 				For j = 0 To (objModule.Tests.Count - 1)
 					Set objTest = objModule.Tests.Item(j)
@@ -102,7 +102,10 @@
 		End Function
 
 		Private Function JSONBooleanPair(strName, blnValue)
-			JSONBooleanPair = JSONString(strName) & ":" & LCase(blnValue)
+			dim blnTrueValue
+			if blnValue = True then blnTrueValue = "true"
+			if blnValue = False then blnTrueValue = "false"
+			JSONBooleanPair = JSONString(strName) & ":" & blnTrueValue
 		End Function
 
 		Private Function JSONStringEscape(strValue)
